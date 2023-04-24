@@ -9,6 +9,8 @@
     <div class="container">
       <div class="auth">
         <RouterView />
+        <RouterLink to="/home">home</RouterLink>
+        <RouterLink to="/auth">Auth</RouterLink>
       </div>
     </div>
 

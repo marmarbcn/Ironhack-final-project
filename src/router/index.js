@@ -3,35 +3,35 @@ import { createRouter, createWebHistory } from 'vue-router'
 import AuthView from '@/views/AuthView.vue'
 import HomeView from '@/views/HomeView.vue'
 import SignInView from '@/views/SignInView.vue'
+import SignUpView from '@/views/SignUpView.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/auth',
     name: 'auth',
     component: AuthView,
     children: [
       {
-        path: 'auth/signin',
+        path: 'signin',
         name: 'signIn',
-        component: SignInView //vista dinámica
+        component: SignInView
       },
       {
-        path: 'auth/signup',
+        path: 'signup',
         name: 'signUp',
-        component: () => import('@/views/SignUpView.vue')
+        component: SignUpView
       }
     ]
   },
   {
-    path: '/home',
+    path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta: { requireAuth: true }
   }
 ]
-
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
-
 export default router
