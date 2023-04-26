@@ -26,9 +26,9 @@ const password = ref([]);
 const userStore = useUserStore()
 
 
-const submit = (event) => {
+const submit = async (event) => {
     event.preventDefault()
-    userStore.signIn(email.value, password.value)
+    await userStore.signIn(email.value, password.value)
     console.log('holi')
     router.push('/dashboard')
     console.log('puti')

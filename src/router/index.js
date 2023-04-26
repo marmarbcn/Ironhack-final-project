@@ -53,6 +53,7 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   const userStore = useUserStore()
+  console.log(userStore.user?.email)
   if (!userStore.user && to.meta.requireAuth) {
     return { path: '/signin' }
   }

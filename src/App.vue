@@ -17,14 +17,9 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
 
 import Navbar from './components/Navbar.vue'
-import PopupAuth from './components/PopupAuth.vue'
-import HomeView from '@/views/HomeView.vue'
 
-
-const isOpen = ref(false);
 
 
 </script>
