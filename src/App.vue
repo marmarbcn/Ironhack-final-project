@@ -1,35 +1,30 @@
 
 
 <template>
-  <header>
-    <Navbar />
-  </header>
+  <div class="container contrast-primary-background-color">
+    <header>
+      <Navbar />
+    </header>
 
-  <body>
-    <div class="container">
-      <div class="auth">
+    <body>
+
+      <div class="container text-center">
         <RouterView />
-        <RouterLink to="/home">home</RouterLink>
-        <RouterLink to="/auth">Auth</RouterLink>
       </div>
-    </div>
 
 
-
-
-
-  </body>
+    </body>
+  </div>
 </template>
 <script setup>
+import { ref } from 'vue'
 
 import Navbar from './components/Navbar.vue'
-import { RouterLink, useRouter } from 'vue-router';
+import PopupAuth from './components/PopupAuth.vue'
+import HomeView from '@/views/HomeView.vue'
 
 
-
-const router = useRouter()
-
-
+const isOpen = ref(false);
 
 
 </script>
@@ -37,6 +32,7 @@ const router = useRouter()
 <style scoped>
 .container {
   max-width: 800px;
+
 }
 </style>
 
