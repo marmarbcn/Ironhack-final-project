@@ -1,39 +1,62 @@
 <template>
-    <h1>Sign In</h1>
-    <form @submit="submit">
-        <div class="mb-3">
-            <label for="input-email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="input-email" aria-describedby="emailHelp" v-model="email" required>
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div class="mb-3">
-            <label for="input-password1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="input-password1" v-model="password" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="card card-max-width">
+        <div class="p-5">
+            <h4 class="card-title">Sign In</h4>
 
-    </form>
+            <div class="alert alert-danger" role="alert" v-if="error">
+                {{ error }}
+            </div>
+            <Form @submit="submit" :validation-schema="schema">
+                <div class="mb-3">
+                    <label for="input-email" class="form-label">Email address</label>
+                    <Field id="input-email" name="email" type="email" placeholder="Email" class="form-control" />
+                    <ErrorMessage name="email" class="form-text" />
+                </div>
+                <div class="mb-3">
+                    <label for="input-password" class="form-label"> Password</label>
+                    <Field id="input-password" name="password" type="password" placeholder="Password"
+                        class="form-control" />
+                    <ErrorMessage name="password" class="form-text" />
+                </div>
+                <button class="btn btn-primary" type="submit">Sign In</button>
+            </Form>
+        </div>
+    </div>
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router';
 import { useUserStore } from '../stores/user';
+import { Form, Field, ErrorMessage } from 'vee-validate';
+import * as yup from 'yup';
+import { useRouter } from 'vue-router'
 import { ref } from 'vue';
-import router from '../router';
 
-const email = ref([]);
-const password = ref([]);
-const userStore = useUserStore()
+const schema = yup.object().shape({
+    email: yup.string().email('This field must be a valid email').required('This field is required, motherfuckers!'),
+    password: yup.string().required('This field is required, motherfuckers!'),
+});
+const router = useRouter();
+const userStore = useUserStore();
+const error = ref();
 
 
-const submit = async (event) => {
-    event.preventDefault()
-    await userStore.signIn(email.value, password.value)
-    console.log('holi')
-    router.push('/dashboard')
-    console.log('puti')
+const submit = async (values) => {
+    error.value = '';
+
+    try {
+        await userStore.signIn(values.email, values.password)
+        router.push('/dashboard')
+    } catch (err) {
+        error.value = err.message;
+    }
+
 }
 
-
-
 </script>
+
+<style scoped>
+.card-max-width {
+    max-width: 600px;
+    margin: 0 auto;
+}
+</style>

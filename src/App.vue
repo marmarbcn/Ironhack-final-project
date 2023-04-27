@@ -1,34 +1,48 @@
 
 
 <template>
-  <div class="container contrast-primary-background-color">
-    <header>
-      <Navbar />
-    </header>
+  <header>
+    <Navbar />
+  </header>
 
-    <body>
+  <main>
+    <div class="container-fluid p-5">
 
-      <div class="container text-center">
-        <RouterView />
-      </div>
+      <RouterView />
 
 
-    </body>
-  </div>
+    </div>
+  </main>
 </template>
 <script setup>
 
 import Navbar from './components/Navbar.vue'
 
+import { onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user.js'
 
+const router = useRouter()
+const userStore = useUserStore()
+const { user } = storeToRefs(userStore)
+
+onMounted(async () => {
+  try {
+    await userStore.fetchUser() // here we call fetch user
+    if (!user.value) {
+      // redirect them to logout if the user is not there
+      router.push({ path: '/signin' });
+    } else {
+      // continue to dashboard
+      router.push({ path: '/dashboard' });
+    }
+  } catch (e) {
+    console.log(e)
+  }
+})
 
 </script>
 
-<style scoped>
-.container {
-  max-width: 800px;
-
-}
-</style>
 
 

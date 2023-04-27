@@ -1,48 +1,57 @@
 <template>
-    <h1>
-        Sign Up
-    </h1>
-    <form @submit="submit">
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" aria-describedby="emailHelp" v-model="email">
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputName" class="form-label">Name</label>
-            <input type="text" class="form-control" v-model="name">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputLastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" v-model="lastname">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" v-model="password">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Repeat Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
-        </div>
+    <div class="card card-max-width">
+        <div class="p-5">
+            <h4 class="card-title">
+                Sign Up
+            </h4>
 
-        <button type="submit" class="btn btn-primary">Sign Up!</button>
-    </form>
+            <Form @submit="submit" :validation-schema="schema">
+                <div class="mb-3">
+                    <label for="input-email" class="form-label">Email address</label>
+                    <Field id="input-email" name="email" type="email" placeholder="Email" class="form-control" />
+                    <ErrorMessage name="email" class="form-text" />
+                </div>
+                <div class="mb-3">
+                    <label for="input-password" class="form-label"> Password</label>
+                    <Field id="input-password" name="password" type="password" placeholder="Password"
+                        class="form-control" />
+                    <ErrorMessage name="password" class="form-text" />
+                </div>
+                <div class="mb-3">
+                    <label for="input-confirmPassword" class="form-label">Password</label>
+                    <Field id="input-confirmPassword" name="confirmPassword" type="password" placeholder="Repeat password"
+                        class="form-control" />
+                    <ErrorMessage name="confirmPassword" class="form-text" />
+                </div>
+                <button class="btn btn-primary">Sign up</button>
+            </Form>
+        </div>
+    </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useUserStore } from '../stores/user';
 
-const email = ref([]);
-const password = ref([]);
-const name = ref([]);
-const lastname = ref([]);
+import { useUserStore } from '../stores/user';
+import { Form, Field, ErrorMessage } from 'vee-validate';
+import * as yup from 'yup';
+import { useRouter } from 'vue-router'
+
+const schema = yup.object().shape({
+    email: yup.string().email('This field must be a valid email').required('This field is required, motherfuckers!'),
+    password: yup.string().min(6, 'min length 6 characters').required('This field is required, motherfuckers!'),
+    confirmPassword: yup.string().required('This field is required, motherfuckers!').oneOf([yup.ref('password')], 'Passwords do not match')
+
+})
+
+const router = useRouter();
 const userStore = useUserStore()
 
-const submit = (event) => {
-    event.preventDefault()
-    userStore.signUp(email.value, password.value, name.value, lastname.value)
+const submit = (values) => {
+
+    userStore.signUp(values.email, values.password)
+    router.push('/dashboard')
 }
 
 
 </script>
+

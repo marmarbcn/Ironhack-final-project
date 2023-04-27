@@ -18,7 +18,7 @@
                 :disabled="loading" />
         </div>
         <RouterLink to="/dashboard">Dashboard</RouterLink>
-        <SignOut />
+
         <div>
 
         </div>
@@ -29,7 +29,7 @@
 import { supabase } from '../supabase'
 import { onMounted, ref, toRefs } from 'vue'
 
-import SignOut from './SignOut.vue';
+
 
 
 const props = defineProps(['session'])

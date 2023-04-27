@@ -4,4 +4,6 @@
 
   </main>
 </template>
+<script setup>
 
+</script>
