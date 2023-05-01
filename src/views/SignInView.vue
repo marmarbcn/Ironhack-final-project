@@ -54,9 +54,3 @@ const submit = async (values) => {
 
 </script>
 
-<style scoped>
-.card-max-width {
-    max-width: 600px;
-    margin: 0 auto;
-}
-</style>

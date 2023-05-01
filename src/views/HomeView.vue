@@ -1,8 +1,12 @@
 <template>
-  <main>
-    This is a home page
+  <div class="card card-max-width">
+    <div class="p-5">
+      <h4 class="card-title">HOME PAGE</h4>
 
-  </main>
+
+
+    </div>
+  </div>
 </template>
 <script setup>
 
