@@ -22,6 +22,7 @@ export const useTaskStore = defineStore('tasks', {
         .from('tasks')
         .select('*')
         .order('id', { ascending: false });
+      if (error) throw error;
       this.tasks = data;
     },
     async addTask(title) {
@@ -44,6 +45,7 @@ export const useTaskStore = defineStore('tasks', {
         .from('tasks')
         .update({ title: title })
         .eq('id', task.id);
+      if (error) throw error;
       this.tasks = this.tasks.map((item) =>
         item.id === task.id ? { ...item, title } : item
       );
@@ -53,12 +55,12 @@ export const useTaskStore = defineStore('tasks', {
         .from('tasks')
         .update({ is_complete: is_complete })
         .eq('id', task.id);
+      if (error) throw error;
       this.tasks = this.tasks.map((item) =>
         item.id === task.id ? { ...item, is_complete } : item
       );
     },
     async deleteTask(task) {
-      console.log(task);
       const { error } = await supabase.from('tasks').delete().eq('id', task.id);
       if (error) throw error;
       this.tasks = this.tasks.filter((item) => item.id != task.id);
