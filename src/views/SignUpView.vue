@@ -46,10 +46,11 @@ const schema = yup.object().shape({
 const router = useRouter();
 const userStore = useUserStore()
 
-const submit = (values) => {
+const submit = async (values) => {
 
-    userStore.signUp(values.email, values.password)
-    router.push('/dashboard')
+    await userStore.signUp(values.email, values.password)
+    router.push('/')
+
 }
 
 
