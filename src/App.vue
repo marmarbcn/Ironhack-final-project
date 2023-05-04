@@ -2,7 +2,7 @@
 
 <template>
   <header>
-    <Navbar />
+    <NavbarComponent />
   </header>
 
   <main>
@@ -16,16 +16,18 @@
 </template>
 <script setup>
 
-import Navbar from './components/Navbar.vue'
+import NavbarComponent from './components/NavbarComponent.vue'
 
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user.js'
 
+
 const router = useRouter()
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
+
 
 onMounted(async () => {
   try {
@@ -34,11 +36,11 @@ onMounted(async () => {
       // redirect them to logout if the user is not there
       router.push({ path: '/signin' });
     } else {
-      // continue to dashboard
-      router.push({ path: '/dashboard' });
+      // continue to tasks
+      router.push({ path: '/' });
     }
   } catch (e) {
-    console.log(e)
+    console.error(e)
   }
 })
 

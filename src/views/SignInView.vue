@@ -45,7 +45,7 @@ const submit = async (values) => {
 
     try {
         await userStore.signIn(values.email, values.password)
-        router.push('/dashboard')
+        router.push('/')
     } catch (err) {
         error.value = err.message;
     }
@@ -54,9 +54,3 @@ const submit = async (values) => {
 
 </script>
 
-<style scoped>
-.card-max-width {
-    max-width: 600px;
-    margin: 0 auto;
-}
-</style>

@@ -27,7 +27,7 @@ const router = useRouter();
 
 const signOut = () => {
   userStore.signOut();
-  router.push('/');
+  router.push('/signin');
 
 }
 
