@@ -18,14 +18,16 @@
 
 import NavbarComponent from './components/NavbarComponent.vue'
 
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user.js'
 
+
 const router = useRouter()
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
+
 
 onMounted(async () => {
   try {

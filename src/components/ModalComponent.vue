@@ -9,7 +9,11 @@
                 <div class="modal-footer d-flex justify-content-between">
                     <button @click="modalActive = !modalActive" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
-                    <button @click="deleteSubmit" type="button" class="btn btn-primary">Delete!</button>
+                    <button @click="deleteSubmit" type="button" class="btn btn-primary align-content-center">Delete
+                        <lord-icon src="https://cdn.lordicon.com/jmkrnisz.json" trigger="loop" delay="1000"
+                            colors="primary:#ffffff" style="width:20px;height:20px">
+                        </lord-icon>
+                    </button>
                 </div>
 
             </div>

@@ -17,15 +17,12 @@ pinia.use(piniaPersist);
 
 new Granim({
   element: '#canvas-basic',
-  direction: 'left-right',
+  direction: 'diagonal',
   isPausedWhenNotInView: true,
   states: {
     'default-state': {
       gradients: [
-        // ['#f79ca8', '#e098c6'],
-        // ['#0f95ed', '#f19cf7']
         ['#cec2ff', '#dcb6d5'],
-
         ['#f79ca8', '#e098c6'],
         ['#b3b3f1', '#cf8ba9']
       ]

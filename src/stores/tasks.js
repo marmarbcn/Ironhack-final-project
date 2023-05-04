@@ -14,6 +14,9 @@ export const useTaskStore = defineStore('tasks', {
     },
     incompletedTasks() {
       return this.tasks.filter((task) => !task.is_complete);
+    },
+    allTasks() {
+      return this.tasks.filter((task) => task.id);
     }
   },
   actions: {

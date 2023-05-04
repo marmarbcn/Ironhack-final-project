@@ -8,8 +8,8 @@
                         style="width:20px;height:20px">
                     </lord-icon></button>
                 <div class="p-2 flex-row">
-                    <p class="fs-6 m-0">{{ task.title }}</p>
-                    <p class="fw-lighter fs-6 m-0">: {{ date }}</p>
+                    <p class="fs-6 m-0" :class="task.is_complete ? 'text-decoration-line-through' : ''">{{ task.title }}</p>
+                    <p class="fw-lighter fs-6 m-0">{{ day }}/{{ month }}/{{ year }}</p>
                 </div>
             </div>
             <div class="p-2 flex-row">
@@ -28,15 +28,19 @@
             </div>
 
         </div>
-
-        <ModalComponent :modalActive="modalActive" :deleteSubmit="deleteSubmit">
+        <!--DELETE DIALOG -->
+        <ModalComponent :modalActive="modalActive" :deleteSubmit="deleteSubmit" style="z-index: 10">
             <div>
                 <h5 class="modal-title"> Delete a Task</h5>
-                <p class="modal-body">Are you sure you want to delete?</p>
+                <p class="modal-body">Are you sure do you want to delete?</p>
             </div>
         </ModalComponent>
-        <div v-if="showUpdate" class="modal d-block bg-secondary modal-fade p-2 bg-opacity-50">
-            <button @click="showUpdate = !showUpdate" class="btn-close"></button>
+        <!-- UPDATE DIALOG -->
+        <div v-if="showUpdate" class="modal d-block bg-secondary modal-fade p-2 bg-opacity-75" style="z-index: 10">
+            <button @click="showUpdate = !showUpdate" class="btn closing-btn"><lord-icon
+                    src="https://cdn.lordicon.com/albqovim.json" trigger="hover" colors="primary:#ee6d66" state="hover-2"
+                    style="width:30px;height:30px">
+                </lord-icon></button>
             <div class="modal-dialog-centered  modal-dialog modal-sm">
                 <form @submit.prevent="update">
                     <div class="modal-content">
@@ -68,6 +72,10 @@ const modalActive = ref(false);
 const title = ref();
 const completed = ref(props.task.is_complete);
 const date = ref(props.task.inserted_at.substr(0, 10));
+const year = ref(date.value.slice(0, 4));
+const month = ref(date.value.slice(5, 7));
+const day = ref(date.value.slice(8, 10))
+
 
 const deleteSubmit = async () => {
     await taskStore.deleteTask(props.task)
@@ -96,6 +104,12 @@ const completedTask = async () => {
 
 .check-btn * {
     opacity: 0;
+}
+
+.closing-btn {
+    position: relative;
+    left: calc(50% - 200px);
+    top: calc(50% - 10px)
 }
 
 [data-completed="true"] .check-btn *,

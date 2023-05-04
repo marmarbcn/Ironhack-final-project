@@ -37,9 +37,9 @@ import * as yup from 'yup';
 import { useRouter } from 'vue-router'
 
 const schema = yup.object().shape({
-    email: yup.string().email('This field must be a valid email').required('This field is required, motherfuckers!'),
-    password: yup.string().min(6, 'min length 6 characters').required('This field is required, motherfuckers!'),
-    confirmPassword: yup.string().required('This field is required, motherfuckers!').oneOf([yup.ref('password')], 'Passwords do not match')
+    email: yup.string().email('This field must be a valid email').required('This field is required!'),
+    password: yup.string().min(6, 'Minimum length is 6 characters').required('This field is required!'),
+    confirmPassword: yup.string().required('This field is required!').oneOf([yup.ref('password')], 'Passwords do not match')
 
 })
 
