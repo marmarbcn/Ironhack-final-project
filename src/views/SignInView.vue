@@ -32,8 +32,8 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue';
 
 const schema = yup.object().shape({
-    email: yup.string().email('This field must be a valid email').required('This field is required, motherfuckers!'),
-    password: yup.string().required('This field is required, motherfuckers!'),
+    email: yup.string().email('This field must be a valid email').required('This field is required!'),
+    password: yup.string().required('This field is required!'),
 });
 const router = useRouter();
 const userStore = useUserStore();
