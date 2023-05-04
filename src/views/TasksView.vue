@@ -2,24 +2,27 @@
     <div class="card card-max-width">
 
         <div class="p-5">
-            <h4> Welcome back, </h4>
-            <h4 class="card-title">My Tasks</h4>
+            <h4 class="card-title"> Welcome! </h4>
             <form @submit.prevent="addSubmit" class="mb-3">
-                <input type="text" placeholder="Add your new task" class="form-control" v-model="title" minlength="4"
-                    required />
-                <button type="submit" class="btn btn-primary">Add Task</button>
+                <div class="input-group">
+                    <input type="text" placeholder="Add your new task" class="form-control" v-model="title" minlength="4"
+                        required />
+                    <button type="submit" class="btn btn-primary">Add Task</button>
+                </div>
             </form>
-            <div>
+
+            <div class="overflow-auto">
+                <h5> Tasks To Do </h5>
                 <ul class="list-group">
-                    <Task :task="incompleted" v-for="incompleted in taskStore.incompletedTasks" />
+                    <TaskComponent :task="incompleted" v-for="incompleted in taskStore.incompletedTasks" />
 
                 </ul>
             </div>
             <div>
-                <span>Completed</span>
+                <h5>Tasks completed</h5>
                 <ul class="list-group">
 
-                    <Task :task="completed" v-for="completed in taskStore.completedTasks" />
+                    <TaskComponent :task="completed" v-for="completed in taskStore.completedTasks" />
 
                 </ul>
             </div>
@@ -34,7 +37,7 @@
 import { useTaskStore } from '@/stores/tasks'
 import { onMounted, ref } from 'vue';
 
-import Task from '@/components/Task.vue'
+import TaskComponent from '../components/TaskComponent.vue';
 
 const taskStore = useTaskStore();
 

@@ -1,19 +1,19 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import piniaPersist from 'pinia-plugin-persist'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import piniaPersist from 'pinia-plugin-persist';
 
-import App from './App.vue'
-import router from './router'
-import './assets/main.css'
+import App from './App.vue';
+import router from './router';
+import './assets/main.css';
 
-const app = createApp(App)
-const pinia = createPinia()
+const app = createApp(App);
+const pinia = createPinia();
 
-app.use(pinia)
-app.use(router)
-app.mount('#app')
+app.use(pinia);
+app.use(router);
+app.mount('#app');
 
-pinia.use(piniaPersist)
+pinia.use(piniaPersist);
 
 new Granim({
   element: '#canvas-basic',
@@ -31,4 +31,4 @@ new Granim({
       ]
     }
   }
-})
+});

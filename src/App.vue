@@ -2,7 +2,7 @@
 
 <template>
   <header>
-    <Navbar />
+    <NavbarComponent />
   </header>
 
   <main>
@@ -16,7 +16,7 @@
 </template>
 <script setup>
 
-import Navbar from './components/Navbar.vue'
+import NavbarComponent from './components/NavbarComponent.vue'
 
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
