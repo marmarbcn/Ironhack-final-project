@@ -1,17 +1,18 @@
 <template>
-    <div class="card card-max-width">
+    <div class="card card-max-width h-100">
 
-        <div class="p-5">
+        <div class=" p-3 p-sm-5 d-flex flex-column h-100">
+            <RouterLink to="/update-password">Update password</RouterLink>
             <h4 class="card-title mb-4"> Welcome, <br>
                 {{ userStore.user.email }}! </h4>
             <form @submit.prevent="addSubmit" class="mb-4">
                 <div class="input-group">
                     <input type="text" placeholder="Add your new task" class="form-control" v-model="title" minlength="4"
                         required />
-                    <button type="submit" class="btn btn-primary">Add Task</button>
+                    <button type="submit" class="btn btn-primary z-0">Add Task</button>
                 </div>
             </form>
-            <div id="tabs">
+            <div id="tabs" class="flex-grow-1 d-flex flex-column" style="min-height: 0;">
                 <ul class="nav nav-tabs nav-fill">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
@@ -29,25 +30,27 @@
                     </li>
 
                 </ul>
-                <ul class="list-group overflow-auto">
-                    <div class="tab-content list-group" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
-                            tabindex="0">
-                            <TaskComponent :task="task" v-for="task in taskStore.allTasks" />
-                        </div>
-                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
-                            tabindex="0">
-                            <TaskComponent :task="completed" v-for="completed in taskStore.completedTasks" />
+                <div id="content-tabs" class="flex-grow-1 overflow-auto" style="min-height: 0;">
+                    <ul class="list-group">
+                        <div class="tab-content list-group" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                                aria-labelledby="home-tab" tabindex="0">
+                                <TaskComponent :task="task" v-for="task in taskStore.allTasks" />
+                            </div>
+                            <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+                                tabindex="0">
+                                <TaskComponent :task="completed" v-for="completed in taskStore.completedTasks" />
 
+                            </div>
+                            <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab"
+                                tabindex="0">
+                                <TaskComponent :task="incompleted" v-for="incompleted in taskStore.incompletedTasks" />
+                            </div>
+                            <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab"
+                                tabindex="0">...</div>
                         </div>
-                        <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab"
-                            tabindex="0">
-                            <TaskComponent :task="incompleted" v-for="incompleted in taskStore.incompletedTasks" />
-                        </div>
-                        <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab"
-                            tabindex="0">...</div>
-                    </div>
-                </ul>
+                    </ul>
+                </div>
             </div>
 
         </div>
@@ -63,6 +66,7 @@ import { onMounted, ref } from 'vue';
 
 import TaskComponent from '../components/TaskComponent.vue';
 import { useUserStore } from '../stores/user';
+
 
 
 const taskStore = useTaskStore();
@@ -84,3 +88,4 @@ const addSubmit = async () => {
 }
 
 </script>
+

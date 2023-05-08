@@ -1,18 +1,20 @@
 
 
 <template>
-  <header>
-    <NavbarComponent />
-  </header>
+  <div class="d-flex flex-column vh-100 ">
+    <header>
+      <NavbarComponent />
+    </header>
 
-  <main>
-    <div class="container-fluid p-5">
+    <main class="">
+      <div class="p-sm-5 h-100">
 
-      <RouterView />
+        <RouterView />
+      </div>
 
 
-    </div>
-  </main>
+    </main>
+  </div>
 </template>
 <script setup>
 
@@ -34,10 +36,10 @@ onMounted(async () => {
     await userStore.fetchUser() // here we call fetch user
     if (!user.value) {
       // redirect them to logout if the user is not there
-      router.push({ path: '/signin' });
+      router.push({ path: '/' });
     } else {
       // continue to tasks
-      router.push({ path: '/' });
+      router.push({ path: '/tasks' });
     }
   } catch (e) {
     console.error(e)
@@ -46,5 +48,11 @@ onMounted(async () => {
 
 </script>
 
+<style scoped>
+main {
+  flex: 1 0 0;
+  min-height: 0;
 
+}
+</style>
 

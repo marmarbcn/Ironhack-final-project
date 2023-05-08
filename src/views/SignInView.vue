@@ -18,7 +18,10 @@
                         class="form-control" />
                     <ErrorMessage name="password" class="form-text" />
                 </div>
-                <button class="btn btn-primary" type="submit">Sign In</button>
+                <div class="d-flex justify-content-between">
+                    <RouterLink to="/reset-password">Forgot your password?</RouterLink>
+                    <button class="btn btn-primary" type="submit">Sign In</button>
+                </div>
             </Form>
         </div>
     </div>
@@ -30,6 +33,8 @@ import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
 import { useRouter } from 'vue-router'
 import { ref } from 'vue';
+
+
 
 const schema = yup.object().shape({
     email: yup.string().email('This field must be a valid email').required('This field is required!'),
@@ -45,7 +50,7 @@ const submit = async (values) => {
 
     try {
         await userStore.signIn(values.email, values.password)
-        router.push('/')
+        router.push('/tasks')
     } catch (err) {
         error.value = err.message;
     }
