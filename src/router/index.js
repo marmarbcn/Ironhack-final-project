@@ -50,7 +50,7 @@ router.beforeEach((to) => {
   const userStore = useUserStore();
   // console.log(userStore.user)
   if (!userStore.user && to.meta.requireAuth) {
-    return { path: '/auth' };
+    return { path: '/' };
   }
 });
 export default router;

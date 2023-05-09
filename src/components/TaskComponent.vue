@@ -3,6 +3,7 @@
         <li class="list-group-item list-group-item-action p-0" :data-completed="task.is_complete">
             <div class="d-flex flex-row justify-content-between align-items-center ">
                 <div class="p-2 d-flex flex-row justify-content-between align-items-center gap-3">
+                    <!--COMPLETED/INCOMPLETED BUTTON-->
                     <button @click="completedTask" class="btn rounded-circle p-0 d-inline-flex check-btn"><lord-icon
                             src="https://cdn.lordicon.com/jvihlqtw.json" :trigger="task.is_complete ? 'click' : 'hover'"
                             colors="primary:#ee6d66,secondary:#545454" stroke="100" state="hover-2"
@@ -15,24 +16,24 @@
                     </div>
                 </div>
                 <div class="p-2 flex-row">
-                    <button @click="modalUpdate = !modalUpdate" class="btn p-0" data-bs-toggle="modal"
+                    <!--UPDATE BUTTON-->
+                    <button @click="updateDialog = !updateDialog" class="btn p-0" data-bs-toggle="modal"
                         data-bs-target="#updateModal"> <lord-icon src="https://cdn.lordicon.com/bxxnzvfm.json"
                             trigger="hover" colors="primary:#3a3347,secondary:#f4a09c,tertiary:#f9c9c0,quaternary:#ebe6ef"
                             state="hover-2" style="width:35px;height:35px">
                         </lord-icon> </button>
 
-                    <button @click="modalActive = !modalActive" class="btn p-0" type="button"><lord-icon
+                    <!-- DELETE BUTTON-->
+                    <button @click="toggleModal" class="btn p-0" type="button"><lord-icon
                             src="https://cdn.lordicon.com/qjwkduhc.json" trigger="hover"
                             colors="primary:#646e78,secondary:#f4a09c,tertiary:#ebe6ef" state="hover-empty"
                             style="width:30px;height:30px">
                         </lord-icon>
                     </button>
                 </div>
-
             </div>
             <!--DELETE DIALOG -->
-
-            <ModalComponent :modalActive="modalActive" modalTitle="Delete Task">
+            <ModalComponent @close="toggleModal" :modalActive="modalActive" modalTitle="Delete Task">
                 <div class="modal-body">
                     <p>Are you sure do you want to delete?</p>
                 </div>
@@ -44,24 +45,14 @@
                     </button>
                 </div>
             </ModalComponent>
-
-
             <!-- UPDATE DIALOG -->
-
-            <ModalComponent modalTitle="Update Task">
-                <form @submit.prevent="update">
-                    <div class="modal-content">
-                        <div class="input-group">
-                            <input type="text" placeholder="Edit your task" class="form-control" v-model="title"
-                                minlength="4" required />
-                            <button class="btn btn-primary ">Submit</button>
-                        </div>
-                    </div>
-
-                </form>
-            </ModalComponent>
-
-
+            <form @submit.prevent="updateTask" v-show="updateDialog">
+                <div class="input-group">
+                    <input type="text" placeholder="Edit your task" class="form-control" v-model="title" minlength="4"
+                        required />
+                    <button class="btn btn-primary ">Submit</button>
+                </div>
+            </form>
         </li>
     </div>
 </template>
@@ -76,7 +67,7 @@ const taskStore = useTaskStore();
 const props = defineProps(['task'])
 
 const modalActive = ref(false);
-const modalUpdate = ref(false)
+const updateDialog = ref(false);
 
 const title = ref();
 const completed = ref(props.task.is_complete);
@@ -93,10 +84,10 @@ const deleteSubmit = async () => {
 
 
 
-const update = async () => {
+const updateTask = async () => {
     await taskStore.updateTask(props.task, title.value)
     title.value = ''
-    showUpdate.value = false;
+    updateDialog.value = false;
 }
 
 const completedTask = async () => {

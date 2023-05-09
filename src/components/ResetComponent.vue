@@ -11,7 +11,7 @@
             <Form :validation-schema="schema" @submit="handleSubmit" class="d-flex flex-column">
                 <div class="mb-3">
                     <Field id="input-email" name="email" type="email" placeholder="Write your email" class="form-control" />
-                    <ErrorMessage name="email" class="form-text" />
+                    <ErrorMessage name="email" class="form-text text-danger" />
                 </div>
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-primary" type="submit">Reset password!</button>
