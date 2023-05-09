@@ -12,19 +12,32 @@
                     <div class="mb-3">
                         <label for="input-email" class="form-label">Email address</label>
                         <Field id="input-email" name="email" type="email" placeholder="Email" class="form-control" />
-                        <ErrorMessage name="email" class="form-text" />
+                        <ErrorMessage name="email" class="form-text text-danger" />
                     </div>
                     <div class="mb-3">
                         <label for="input-password" class="form-label"> Password</label>
-                        <Field id="input-password" name="password" type="password" placeholder="Password"
-                            class="form-control" />
-                        <ErrorMessage name="password" class="form-text" />
+                        <div class="input-group">
+                            <Field id="input-password" name="password" :type="[showPassword ? 'text' : 'password']"
+                                placeholder="Password" class="form-control" />
+                            <button class="btn btn-outline-secondary inpout-group-text"
+                                @click="showPassword = !showPassword">
+                                <i class="bi" :class="[showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill']"></i>
+                            </button>
+                        </div>
+                        <ErrorMessage name="password" class="form-text text-danger" />
                     </div>
                     <div class="mb-3">
                         <label for="input-confirmPassword" class="form-label">Password</label>
-                        <Field id="input-confirmPassword" name="confirmPassword" type="password"
-                            placeholder="Repeat password" class="form-control" />
-                        <ErrorMessage name="confirmPassword" class="form-text" />
+                        <div class="input-group">
+                            <Field id="input-confirmPassword" name="confirmPassword"
+                                :type="[showPassword ? 'text' : 'password']" placeholder="Repeat password"
+                                class="form-control" />
+                            <button class="btn btn-outline-secondary inpout-group-text"
+                                @click="showPassword = !showPassword">
+                                <i class="bi" :class="[showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill']"></i>
+                            </button>
+                        </div>
+                        <ErrorMessage name="confirmPassword" class="form-text text-danger" />
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
@@ -54,6 +67,7 @@ const router = useRouter();
 const userStore = useUserStore()
 
 const error = ref();
+const showPassword = ref(false);
 
 const submit = async (values) => {
     error.value = '';

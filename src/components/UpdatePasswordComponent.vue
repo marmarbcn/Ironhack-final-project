@@ -5,16 +5,26 @@
             <Form @submit="submit" :validation-schema="schema">
                 <div class="mb-3">
                     <label for="input-password" class="form-label"> Password</label>
-                    <Field id="input-password" name="password" :type="passwordFieldType" v-model="password"
-                        placeholder="Password" class="form-control" /><button type="password" @click="switchVisibility">show
-                        / hide</button>
-                    <ErrorMessage name="password" class="form-text" />
+                    <div class="input-group">
+                        <Field id="input-password" name="password" :type="[showPassword ? 'text' : 'password']"
+                            placeholder="Password" class="form-control" />
+                        <button class="btn btn-outline-secondary inpout-group-text" @click="showPassword = !showPassword">
+                            <i class="bi" :class="[showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill']"></i>
+                        </button>
+                    </div>
+                    <ErrorMessage name="password" class="form-text text-danger" />
                 </div>
                 <div class="mb-3">
                     <label for="input-confirmPassword" class="form-label">Repeat password</label>
-                    <Field id="input-confirmPassword" name="confirmPassword" type="password" placeholder="Repeat password"
-                        class="form-control" />
-                    <ErrorMessage name="confirmPassword" class="form-text" />
+                    <div class="input-group">
+                        <Field id="input-confirmPassword" name="confirmPassword"
+                            :type="[showPassword ? 'text' : 'password']" placeholder="Repeat password"
+                            class="form-control" />
+                        <button class="btn btn-outline-secondary inpout-group-text" @click="showPassword = !showPassword">
+                            <i class="bi" :class="[showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill']"></i>
+                        </button>
+                    </div>
+                    <ErrorMessage name="confirmPassword" class="form-text text-danger" />
                 </div>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </Form>
@@ -37,12 +47,9 @@ const userStore = useUserStore();
 const error = ref();
 const router = useRouter();
 
-const password = ref('');
-const passwordFieldType = ref('password');
+const showPassword = ref(false);
 
 
-
-const switchVisibility = () => passwordFieldType = passwordFieldType === "password" ? "text" : "password";
 
 
 const submit = async (value) => {

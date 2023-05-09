@@ -2,7 +2,6 @@
     <div class="card card-max-width h-100">
 
         <div class=" p-3 p-sm-5 d-flex flex-column h-100">
-            <RouterLink to="/update-password">Update password</RouterLink>
             <h4 class="card-title mb-4"> Welcome, <br>
                 {{ userStore.user.email }}! </h4>
             <form @submit.prevent="addSubmit" class="mb-4">
