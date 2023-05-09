@@ -29,22 +29,8 @@ import { useUserStore } from '@/stores/user.js'
 const router = useRouter()
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
+console.log('p', user.value)
 
-
-onMounted(async () => {
-  try {
-    await userStore.fetchUser() // here we call fetch user
-    if (!user.value) {
-      // redirect them to logout if the user is not there
-      router.push({ path: '/' });
-    } else {
-      // continue to tasks
-      router.push({ path: '/tasks' });
-    }
-  } catch (e) {
-    console.error(e)
-  }
-})
 
 </script>
 
