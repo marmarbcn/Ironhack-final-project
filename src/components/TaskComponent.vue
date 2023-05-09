@@ -24,7 +24,7 @@
                         </lord-icon> </button>
 
                     <!-- DELETE BUTTON-->
-                    <button @click="toggleModal" class="btn p-0" type="button"><lord-icon
+                    <button @click="modalActive = !modalActive" class="btn p-0" type="button"><lord-icon
                             src="https://cdn.lordicon.com/qjwkduhc.json" trigger="hover"
                             colors="primary:#646e78,secondary:#f4a09c,tertiary:#ebe6ef" state="hover-empty"
                             style="width:30px;height:30px">
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <!--DELETE DIALOG -->
-            <ModalComponent @close="toggleModal" :modalActive="modalActive" modalTitle="Delete Task">
+            <ModalComponent :modalActive="modalActive" modalTitle="Delete Task">
                 <div class="modal-body">
                     <p>Are you sure do you want to delete?</p>
                 </div>
