@@ -23,7 +23,7 @@
     </teleport>
 </template>
 <script setup>
-const props = defineProps(['modalActive', 'modalTitle', 'modalUpdate'])
+const props = defineProps(['modalActive', 'modalTitle'])
 
 </script>
 <style scoped>
