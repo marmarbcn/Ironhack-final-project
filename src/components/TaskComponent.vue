@@ -1,47 +1,54 @@
 <template>
-    <li class="list-group-item list-group-item-action overflow-auto p-0" :data-completed="task.is_complete">
-        <div class="d-flex flex-row justify-content-between align-items-center ">
-            <div class="p-2 d-flex flex-row justify-content-between align-items-center gap-3">
-                <button @click="completedTask" class="btn rounded-circle p-0 d-inline-flex check-btn"><lord-icon
-                        src="https://cdn.lordicon.com/jvihlqtw.json" :trigger="task.is_complete ? 'click' : 'hover'"
-                        colors="primary:#ee6d66,secondary:#545454" stroke="100" state="hover-2"
-                        style="width:20px;height:20px">
-                    </lord-icon></button>
-                <div class="p-2 flex-row">
-                    <p class="fs-6 m-0" :class="task.is_complete ? 'text-decoration-line-through' : ''">{{ task.title }}</p>
-                    <p class="fw-lighter fs-6 m-0">{{ day }}/{{ month }}/{{ year }}</p>
+    <div>
+        <li class="list-group-item list-group-item-action p-0" :data-completed="task.is_complete">
+            <div class="d-flex flex-row justify-content-between align-items-center ">
+                <div class="p-2 d-flex flex-row justify-content-between align-items-center gap-3">
+                    <button @click="completedTask" class="btn rounded-circle p-0 d-inline-flex check-btn"><lord-icon
+                            src="https://cdn.lordicon.com/jvihlqtw.json" :trigger="task.is_complete ? 'click' : 'hover'"
+                            colors="primary:#ee6d66,secondary:#545454" stroke="100" state="hover-2"
+                            style="width:20px;height:20px">
+                        </lord-icon></button>
+                    <div class="p-2 flex-row">
+                        <p class="fs-6 m-0" :class="task.is_complete ? 'text-decoration-line-through' : ''">{{ task.title }}
+                        </p>
+                        <p class="fw-lighter fs-6 m-0">{{ day }}/{{ month }}/{{ year }}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="p-2 flex-row">
-                <button @click="showUpdate = !showUpdate" class="btn p-0" data-bs-toggle="modal"
-                    data-bs-target="#updateModal"> <lord-icon src="https://cdn.lordicon.com/bxxnzvfm.json" trigger="hover"
-                        colors="primary:#3a3347,secondary:#f4a09c,tertiary:#f9c9c0,quaternary:#ebe6ef" state="hover-2"
-                        style="width:35px;height:35px">
-                    </lord-icon> </button>
+                <div class="p-2 flex-row">
+                    <button @click="modalUpdate = !modalUpdate" class="btn p-0" data-bs-toggle="modal"
+                        data-bs-target="#updateModal"> <lord-icon src="https://cdn.lordicon.com/bxxnzvfm.json"
+                            trigger="hover" colors="primary:#3a3347,secondary:#f4a09c,tertiary:#f9c9c0,quaternary:#ebe6ef"
+                            state="hover-2" style="width:35px;height:35px">
+                        </lord-icon> </button>
 
-                <button @click="modalActive = !modalActive" class="btn p-0" type="button"><lord-icon
-                        src="https://cdn.lordicon.com/qjwkduhc.json" trigger="hover"
-                        colors="primary:#646e78,secondary:#f4a09c,tertiary:#ebe6ef" state="hover-empty"
-                        style="width:30px;height:30px">
-                    </lord-icon>
-                </button>
-            </div>
+                    <button @click="modalActive = !modalActive" class="btn p-0" type="button"><lord-icon
+                            src="https://cdn.lordicon.com/qjwkduhc.json" trigger="hover"
+                            colors="primary:#646e78,secondary:#f4a09c,tertiary:#ebe6ef" state="hover-empty"
+                            style="width:30px;height:30px">
+                        </lord-icon>
+                    </button>
+                </div>
 
-        </div>
-        <!--DELETE DIALOG -->
-        <ModalComponent :modalActive="modalActive" :deleteSubmit="deleteSubmit" style="z-index: 10">
-            <div>
-                <h5 class="modal-title"> Delete a Task</h5>
-                <p class="modal-body">Are you sure do you want to delete?</p>
             </div>
-        </ModalComponent>
-        <!-- UPDATE DIALOG -->
-        <div v-if="showUpdate" class="modal d-block bg-secondary modal-fade p-2 bg-opacity-75" style="z-index: 10">
-            <button @click="showUpdate = !showUpdate" class="btn closing-btn"><lord-icon
-                    src="https://cdn.lordicon.com/albqovim.json" trigger="hover" colors="primary:#ee6d66" state="hover-2"
-                    style="width:30px;height:30px">
-                </lord-icon></button>
-            <div class="modal-dialog-centered  modal-dialog modal-sm">
+            <!--DELETE DIALOG -->
+
+            <ModalComponent :modalActive="modalActive" modalTitle="Delete Task">
+                <div class="modal-body">
+                    <p>Are you sure do you want to delete?</p>
+                </div>
+                <div class="modal-footer d-flex justify-content-end">
+                    <button @click="deleteSubmit" type="button" class="btn btn-primary align-content-center">Delete
+                        <lord-icon src="https://cdn.lordicon.com/jmkrnisz.json" trigger="loop" delay="1000"
+                            colors="primary:#ffffff" style="width:20px;height:20px">
+                        </lord-icon>
+                    </button>
+                </div>
+            </ModalComponent>
+
+
+            <!-- UPDATE DIALOG -->
+
+            <ModalComponent modalTitle="Update Task">
                 <form @submit.prevent="update">
                     <div class="modal-content">
                         <div class="input-group">
@@ -52,9 +59,11 @@
                     </div>
 
                 </form>
-            </div>
-        </div>
-    </li>
+            </ModalComponent>
+
+
+        </li>
+    </div>
 </template>
 
 <script setup>
@@ -66,8 +75,8 @@ import ModalComponent from '@/components/ModalComponent.vue'
 const taskStore = useTaskStore();
 const props = defineProps(['task'])
 
-const showUpdate = ref(false)
 const modalActive = ref(false);
+const modalUpdate = ref(false)
 
 const title = ref();
 const completed = ref(props.task.is_complete);

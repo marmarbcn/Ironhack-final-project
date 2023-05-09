@@ -16,7 +16,7 @@ export const useTaskStore = defineStore('tasks', {
       return this.tasks.filter((task) => !task.is_complete);
     },
     allTasks() {
-      return this.tasks.filter((task) => task.id);
+      return this.tasks;
     }
   },
   actions: {
