@@ -46,9 +46,12 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
   const userStore = useUserStore();
-  // console.log(userStore.user)
+  if (userStore.user === undefined) {
+    await userStore.fetchUser();
+  }
+  console.log(userStore.user, to);
   if (!userStore.user && to.meta.requireAuth) {
     return { path: '/' };
   }

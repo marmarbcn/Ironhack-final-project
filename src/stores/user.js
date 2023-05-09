@@ -5,7 +5,7 @@ import { supabase } from '../supabase';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    user: null
+    user: undefined
   }),
 
   actions: {
