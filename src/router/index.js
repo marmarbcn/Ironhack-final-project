@@ -1,23 +1,56 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import { useUserStore } from '@/stores/user';
+//components
+import SignInView from '@/views/SignInView.vue';
+import SignUpView from '@/views/SignUpView.vue';
+import TasksView from '@/views/TasksView.vue';
 
+import ResetComponent from '@/components/ResetComponent.vue';
+import AuthComponent from '@/components/AuthComponent.vue';
+import UpdatePasswordComponent from '@/components/UpdatePasswordComponent.vue';
+
+const routes = [
+  {
+    path: '/',
+    name: 'auth',
+    component: AuthComponent
+  },
+  {
+    path: '/signin',
+    name: 'signIn',
+    component: SignInView
+  },
+  {
+    path: '/signup',
+    name: 'signUp',
+    component: SignUpView
+  },
+  {
+    path: '/reset-password',
+    component: ResetComponent
+  },
+
+  {
+    path: '/tasks',
+    name: 'tasks',
+    component: TasksView,
+    meta: { requireAuth: true }
+  },
+  {
+    path: '/update-password',
+    component: UpdatePasswordComponent
+  }
+];
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    }
-  ]
-})
+  history: createWebHistory(),
+  routes
+});
 
-export default router
+router.beforeEach((to) => {
+  const userStore = useUserStore();
+  // console.log(userStore.user)
+  if (!userStore.user && to.meta.requireAuth) {
+    return { path: '/' };
+  }
+});
+export default router;
